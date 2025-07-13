@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout Code') {
+            steps {
+                sh 'echo "Checking out code from repository"'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'echo "Building the application"'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'echo "Deploying the application"'
+            }
+        }
+        stage('Monitor') {
+            steps {
+                sh 'echo "Monitoring the application"'
+            }
+        }
+        stage('Cleanup') {
+            steps {
+                sh 'echo "Cleaning up resources"'
+            }
+        }
+    }
+}
