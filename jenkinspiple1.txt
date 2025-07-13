@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    stages {
+        stage('continous devlopment') {
+            steps {
+                echo 'continous download'
+            }
+        }
+        stage('Continuous Build') {
+            steps {
+                echo 'Building application'
+            }
+        }
+        stage('Continuous Test') {
+            steps {
+                echo 'Running continuous tests'
+            }
+        }
+        stage('Continuous Release') {
+            steps {
+                echo 'Releasing application'
+            }
+        }
+    }
+}
+ 
