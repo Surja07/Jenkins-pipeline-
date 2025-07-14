@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone') {
+            steps {
+                git 'https://github.com/Surja07/Maven.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                // Deploy to your server or cloud platform
+                // For example, deploy to Tomcat
+                deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://localhost:8080/')], contextPath: 'my-app', war: '**/*.war'
+            }
+        }
+        stage('Release') {
+            steps {
+                // Create a release tag
+                sh 'git tag -a v1.0 -m "Release v1.0"'
+                sh 'git push origin v1.0'
+            }
+        }
+    }
+}
