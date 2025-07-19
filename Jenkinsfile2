@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'local maven'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+            post {
+                success {
+                    echo 'Archiving the JAR artifact'
+                    archiveArtifacts artifacts: 'target/*.jar'
+                }
+            }
+        }
+
+        stage('Debug Target Folder') {
+            steps {
+                sh 'ls -l target'
+            }
+        }
+    }
+}
