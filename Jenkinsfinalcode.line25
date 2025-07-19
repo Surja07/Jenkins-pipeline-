@@ -1,0 +1,28 @@
+node('built-in') 
+{
+    stage('contionous download') 
+    {
+    git 'https://github.com/IntelliqDevops/maven.git'
+    }
+    stage('contionous build')
+    {
+      sh 'mvn package'
+    }
+         stage('continous deployment')
+    {
+    sh 'scp /var/lib/jenkins/workspace/pipelineconcept/webapp/target/webapp.war ubuntu@172.31.9.223:/var/lib/tomcat10/webapps/test.war'
+     }
+stage ('continous testing')
+  {
+    git 'https://github.com/IntelliqDevops/FunctionalTesting.git'
+    sh 'java -jar /var/lib/jenkins/workspace/pipelineconcept/testing.jar'
+     }
+ stage ('continous release')
+   {
+     sh '''
+scp /var/lib/jenkins/workspace/pipelineconcept/webapp/target/webapp.war ubuntu@172.31.12.169:/home/ubuntu/test.war
+ssh ubuntu@172.31.12.169 "sudo mv /home/ubuntu/test.war /var/lib/tomcat10/webapps/test.war"
+'''
+
+   }
+}
