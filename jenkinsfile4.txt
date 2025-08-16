@@ -1,0 +1,75 @@
+pipeline
+{
+agent any
+    stages
+    {
+        stage('continous download')
+        {
+            steps
+            {
+                script
+                {
+                    cicdds.gitdownload('Maven1')
+                }
+            }
+        }
+        
+        stage('continous build')
+        {
+            steps
+            {
+                script
+                {
+                    cicdds.build()
+                }
+            }
+        }
+        
+        
+        stage('continous deployment')
+        {
+            steps
+            {
+                script
+                {
+                    cicdds.deployment('shdcall-job', '172.31.12.169')
+
+                }
+            }
+        }
+        
+        
+         stage('continous test')
+        {
+            steps
+            {
+                script
+                {
+                    cicdds.test('shdcall-job')
+                }
+            }
+        }
+        
+        
+         
+        stage('continous release')
+        {
+            steps
+            {
+                script
+                {
+                   cicdds.release('shdcall-job', '172.31.9.223')
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+}
